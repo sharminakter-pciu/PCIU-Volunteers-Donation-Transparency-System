@@ -1,175 +1,323 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PCIU Volunteers Donation</title>
 
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f4f6f8;
-      padding: 20px;
+      background: linear-gradient(135deg, #eef6ff, #ffffff);
       min-height: 100vh;
+      color: #061a4d;
       position: relative;
+      overflow-x: hidden;
     }
 
     body::before {
       content: "";
       position: fixed;
       inset: 0;
-      background: url("logo.jpeg") center center / 650px no-repeat;
-      opacity: 0.08;
+      background: url("logo.jpeg") center 120px / 720px no-repeat;
+      opacity: 0.07;
       z-index: -1;
     }
 
-    .container {
-      max-width: 900px;
+    .page {
+      max-width: 1050px;
       margin: auto;
-      background: rgba(255, 255, 255, 0.92);
-      padding: 25px;
-      border-radius: 14px;
-      box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+      padding: 25px 16px 0;
+    }
+
+    .logo-wrap {
+      width: 135px;
+      height: 135px;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      padding: 6px;
+      background: white;
+      box-shadow: 0 0 25px rgba(0, 68, 255, 0.25);
+      animation: floatLogo 3s ease-in-out infinite;
+      position: relative;
+    }
+
+    .logo-wrap::before {
+      content: "";
+      position: absolute;
+      inset: -7px;
+      border-radius: 50%;
+      border: 3px solid rgba(0, 91, 255, 0.35);
+      animation: pulseRing 1.8s infinite;
     }
 
     .logo {
-      width: 90px;
-      height: 90px;
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
       object-fit: contain;
       display: block;
-      margin: 0 auto 10px;
-      border-radius: 50%;
     }
 
-    h1, h2 {
+    h1 {
       text-align: center;
-      margin: 8px 0;
+      font-size: 42px;
+      margin: 8px 0 5px;
+      color: #001f63;
     }
 
-    h2 {
-      color: #555;
-    }
-
-    .total {
+    .subtitle {
       text-align: center;
-      font-size: 26px;
-      font-weight: bold;
-      color: green;
-      margin: 20px 0;
+      font-size: 18px;
+      letter-spacing: 2px;
+      color: #475569;
+      margin-bottom: 20px;
+    }
+
+    .total-card {
+      max-width: 520px;
+      margin: 0 auto 24px;
+      background: linear-gradient(135deg, #002d8f, #0057ff);
+      color: white;
+      border-radius: 18px;
+      padding: 26px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 55, 180, 0.25);
+      animation: fadeUp 0.8s ease;
+    }
+
+    .total-card p {
+      margin: 0;
+      font-size: 18px;
+      opacity: 0.9;
+    }
+
+    .total-card h2 {
+      margin: 8px 0 0;
+      font-size: 52px;
+    }
+
+    .search-box {
+      background: rgba(255,255,255,0.94);
+      border-radius: 16px;
+      padding: 14px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+      margin-bottom: 20px;
     }
 
     input {
       width: 100%;
-      padding: 12px;
-      margin-bottom: 16px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      box-sizing: border-box;
-      font-size: 15px;
+      padding: 15px;
+      border: 1px solid #d0d7e2;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    input:focus {
+      border-color: #0057ff;
+      box-shadow: 0 0 0 3px rgba(0, 87, 255, 0.12);
+    }
+
+    .section-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin: 12px 0;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      background: white;
+      border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.08);
     }
 
     table {
       width: 100%;
       border-collapse: collapse;
-      background: white;
-      border-radius: 10px;
-      overflow: hidden;
+      min-width: 650px;
     }
 
     th {
-      background: #087c35;
+      background: #002777;
       color: white;
-      padding: 12px;
+      padding: 14px;
     }
 
     td {
-      padding: 12px;
+      padding: 14px;
       text-align: center;
-      border-bottom: 1px solid #ddd;
+      border-bottom: 1px solid #e5e7eb;
+      color: #0f172a;
     }
 
     tr:hover {
-      background: #f2f2f2;
+      background: #f5f8ff;
+    }
+
+    .amount {
+      color: #078c35;
+      font-weight: bold;
+    }
+
+    .method {
+      font-weight: bold;
+      color: #0057ff;
     }
 
     .message {
       text-align: center;
-      padding: 15px;
+      padding: 18px;
       color: #666;
     }
 
-    .footer {
-      margin-top: 22px;
+    .note {
+      margin: 25px 0;
+      background: rgba(0, 87, 255, 0.08);
+      border: 1px solid rgba(0, 87, 255, 0.14);
+      color: #002777;
+      padding: 16px;
+      border-radius: 14px;
       text-align: center;
-      color: #666;
-      font-size: 14px;
+      font-weight: bold;
+    }
+
+    footer {
+      margin-top: 30px;
+      background: #001f63;
+      color: white;
+      text-align: center;
+      padding: 24px 15px;
+      border-radius: 20px 20px 0 0;
+    }
+
+    footer p {
+      margin: 7px 0;
+    }
+
+    .top-btn {
+      position: fixed;
+      right: 18px;
+      bottom: 18px;
+      width: 45px;
+      height: 45px;
+      border: none;
+      border-radius: 50%;
+      background: #0057ff;
+      color: white;
+      font-size: 22px;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.2);
+    }
+
+    @keyframes floatLogo {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    @keyframes pulseRing {
+      0% {
+        transform: scale(0.95);
+        opacity: 0.9;
+      }
+      100% {
+        transform: scale(1.18);
+        opacity: 0;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
 
     @media (max-width: 600px) {
-      body {
-        padding: 10px;
-      }
-
       body::before {
-        background-size: 380px;
+        background-size: 430px;
       }
 
-      .container {
-        padding: 15px;
+      h1 {
+        font-size: 30px;
       }
 
-      .logo {
-        width: 75px;
-        height: 75px;
+      .logo-wrap {
+        width: 105px;
+        height: 105px;
       }
 
-      th, td {
-        padding: 8px;
-        font-size: 13px;
+      .total-card h2 {
+        font-size: 38px;
       }
 
-      .total {
-        font-size: 22px;
+      .subtitle {
+        font-size: 14px;
       }
     }
   </style>
 </head>
 
 <body>
-
-  <div class="container">
-    <img src="logo.jpeg" alt="PCIU Volunteers Logo" class="logo">
+  <main class="page">
+    <div class="logo-wrap">
+      <img src="logo.jpeg" alt="PCIU Volunteers Logo" class="logo">
+    </div>
 
     <h1>PCIU Volunteers</h1>
-    <h2>Donation Transparency</h2>
+    <div class="subtitle">Transparency • Accountability • Humanity</div>
 
-    <div class="total">
-      Total Collected: ৳ <span id="total">0</span>
+    <div class="total-card">
+      <p>Total Donation</p>
+      <h2>৳ <span id="total">0</span></h2>
     </div>
 
-    <input type="text" id="search" placeholder="Search number, method or reference...">
-
-    <table>
-      <thead>
-        <tr>
-          <th>Number</th>
-          <th>Amount</th>
-          <th>Method</th>
-          <th>Reference</th>
-        </tr>
-      </thead>
-      <tbody id="table">
-        <tr>
-          <td colspan="4" class="message">Loading data...</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="footer">
-      সকল ডোনেশনের হিসাব স্বচ্ছভাবে প্রকাশ করা হচ্ছে।
+    <div class="search-box">
+      <input type="text" id="search" placeholder="Search number, method or reference...">
     </div>
-  </div>
+
+    <div class="section-title">All Donations</div>
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Number</th>
+            <th>Amount</th>
+            <th>Method</th>
+            <th>Reference</th>
+          </tr>
+        </thead>
+        <tbody id="table">
+          <tr>
+            <td colspan="5" class="message">Loading data...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="note">
+      আপনার প্রতিটি ডোনেশন আমাদের জন্য মূল্যবান। সকল ডোনেশনের হিসাব স্বচ্ছভাবে প্রকাশ করা হচ্ছে। 💙
+    </div>
+  </main>
+
+  <footer>
+    <p><strong>PCIU Volunteers</strong> | Together for Humanity</p>
+    <p>Transparency is our commitment ❤️</p>
+    <p>© 2025 PCIU Volunteers. All Rights Reserved.</p>
+  </footer>
+
+  <button class="top-btn" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 
   <script>
     const sheetURL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vSgQ4esg6HfqhEC4deNG68Vmvfa2W9ymSmg4E7EClSt4P39YdqTQ3qeMERtRh09rrN3UPdqFWrfuymC/pub?output=csv";
@@ -189,7 +337,6 @@
 
       return rows.map(row => {
         const columns = row.split(",");
-
         return {
           number: cleanText(columns[0]),
           amount: cleanText(columns[1]),
@@ -205,7 +352,7 @@
       if (data.length === 0) {
         table.innerHTML = `
           <tr>
-            <td colspan="4" class="message">No donation data found</td>
+            <td colspan="5" class="message">No donation data found</td>
           </tr>
         `;
         totalEl.innerText = "0";
@@ -214,21 +361,22 @@
 
       let total = 0;
 
-      data.forEach(item => {
+      data.forEach((item, index) => {
         const amountNumber = Number(item.amount) || 0;
         total += amountNumber;
 
         table.innerHTML += `
           <tr>
+            <td>${index + 1}</td>
             <td>${item.number}</td>
-            <td>৳ ${item.amount}</td>
-            <td>${item.method}</td>
+            <td class="amount">৳ ${item.amount}</td>
+            <td class="method">${item.method}</td>
             <td>${item.reference || "-"}</td>
           </tr>
         `;
       });
 
-      totalEl.innerText = total;
+      totalEl.innerText = total.toLocaleString();
     }
 
     function searchData() {
@@ -252,7 +400,7 @@
       .catch(error => {
         table.innerHTML = `
           <tr>
-            <td colspan="4" class="message">
+            <td colspan="5" class="message">
               Data load হয়নি। CSV link check করো।
             </td>
           </tr>
@@ -262,6 +410,5 @@
 
     searchInput.addEventListener("input", searchData);
   </script>
-
 </body>
 </html>
