@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PCIU Volunteers Donation</title>
+  <title>PCI Volunteers Donation</title>
 
   <style>
     body {
@@ -11,15 +11,35 @@
       font-family: Arial, sans-serif;
       background: #f4f6f8;
       padding: 20px;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: url("logo.jpeg") center center / 650px no-repeat;
+      opacity: 0.08;
+      z-index: -1;
     }
 
     .container {
       max-width: 900px;
       margin: auto;
-      background: white;
+      background: rgba(255, 255, 255, 0.92);
       padding: 25px;
       border-radius: 14px;
       box-shadow: 0 4px 18px rgba(0,0,0,0.08);
+    }
+
+    .logo {
+      width: 90px;
+      height: 90px;
+      object-fit: contain;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: 50%;
     }
 
     h1, h2 {
@@ -52,6 +72,8 @@
     table {
       width: 100%;
       border-collapse: collapse;
+      background: white;
+      border-radius: 10px;
       overflow: hidden;
     }
 
@@ -89,8 +111,17 @@
         padding: 10px;
       }
 
+      body::before {
+        background-size: 380px;
+      }
+
       .container {
         padding: 15px;
+      }
+
+      .logo {
+        width: 75px;
+        height: 75px;
       }
 
       th, td {
@@ -108,7 +139,9 @@
 <body>
 
   <div class="container">
-    <h1>PCIU Volunteers</h1>
+    <img src="logo.jpeg" alt="PCIU Volunteers Logo" class="logo">
+
+    <h1>PCI Volunteers</h1>
     <h2>Donation Transparency</h2>
 
     <div class="total">
@@ -211,12 +244,7 @@
     }
 
     fetch(sheetURL)
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Sheet data loading failed");
-        }
-        return response.text();
-      })
+      .then(response => response.text())
       .then(csvText => {
         donationData = parseCSV(csvText);
         showData(donationData);
@@ -225,7 +253,7 @@
         table.innerHTML = `
           <tr>
             <td colspan="4" class="message">
-              Data load হয়নি। Live Server দিয়ে open করো এবং CSV link check করো।
+              Data load হয়নি। CSV link check করো।
             </td>
           </tr>
         `;
